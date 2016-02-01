@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'solidus_api'
   s.add_dependency 'solidus_backend'
-  s.add_dependency 'solidus_core', '~> 2.4.0'
+  s.add_dependency 'solidus_core'
   s.add_dependency 'solidus_frontend'
 
   # test suite
