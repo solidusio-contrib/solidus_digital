@@ -10,6 +10,6 @@ task :default => [:spec]
 
 desc "Regenerates a rails 3 app for testing"
 task :test_app do
-  ENV['LIB_NAME'] = 'spree_digital'
+  ENV['LIB_NAME'] = 'solidus_digital'
   Rake::Task['common:test_app'].invoke
 end

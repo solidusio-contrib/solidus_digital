@@ -1,9 +1,4 @@
-[![Compatibility](https://img.shields.io/badge/spree%20compatibility-2.4-pink.svg)](https://github.com/spree-contrib/spree_digital/blob/master/Versionfile)
-[![Build Status](https://travis-ci.org/spree-contrib/spree_digital.png?branch=master)](https://travis-ci.org/spree-contrib/spree_digital)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://github.com/spree-contrib/spree_digital/blob/master/LICENSE.md)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/spree-contrib/spree_digital)
-
-This is a spree extension to enable downloadable products (ebooks, MP3s, videos, etc).
+This is a Solidus extension to enable downloadable products (ebooks, MP3s, videos, etc).
 
 In the [Versionfile](https://github.com/spree-contrib/spree_digital/blob/master/Versionfile) you can see which
 [spree_digital branch](https://github.com/spree-contrib/spree_digital/branches/all?query=stable) supports which
