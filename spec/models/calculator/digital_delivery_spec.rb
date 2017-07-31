@@ -29,7 +29,7 @@ RSpec.describe Spree::Calculator::Shipping::DigitalDelivery do
       variants.each { |v|
         order.contents.add(v, 1)
         order.create_proposed_shipments
-        package.add(order.inventory_units.where(variant_id: v.id).first, 1)
+        package.add(order.inventory_units.where(variant_id: v.id).first)
       }
       package
     }
@@ -42,7 +42,7 @@ RSpec.describe Spree::Calculator::Shipping::DigitalDelivery do
       variants.each { |v|
         order.contents.add(v, 1)
         order.create_proposed_shipments
-        package.add(order.inventory_units.where(variant_id: v.id).first, 1)
+        package.add(order.inventory_units.where(variant_id: v.id).first)
       }
       package
     }
@@ -54,7 +54,7 @@ RSpec.describe Spree::Calculator::Shipping::DigitalDelivery do
       variants.each { |v|
         order.contents.add(v, 1)
         order.create_proposed_shipments
-        package.add(order.inventory_units.where(variant_id: v.id).first, 1)
+        package.add(order.inventory_units.where(variant_id: v.id).first)
       }
       package
     }

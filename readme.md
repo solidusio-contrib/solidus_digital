@@ -1,7 +1,7 @@
 This is a Solidus extension to enable downloadable products (ebooks, MP3s, videos, etc).
 
-In the [Versionfile](https://github.com/spree-contrib/spree_digital/blob/master/Versionfile) you can see which
-[spree_digital branch](https://github.com/spree-contrib/spree_digital/branches/all?query=stable) supports which
+In the [Versionfile](https://github.com/spree-contrib/solidus_digital/blob/master/Versionfile) you can see which
+[solidus_digital branch](https://github.com/spree-contrib/solidus_digital/branches/all?query=stable) supports which
 [Spree version](https://github.com/spree/spree/branches/all?query=stable).
 The master branch is not considered stable and corresponds to the [spree master branch](https://github.com/spree/spree).
 
@@ -10,31 +10,31 @@ There are features that have been implemented that are not documented here, plea
 
 The idea is simple.
 You attach a file to a Product (or a Variant of this Product) and when people buy it, they will receive a link via email where they can download it once.
-There are a few assumptions that spree_digital (currently) makes and it's important to be aware of them.
+There are a few assumptions that solidus_digital (currently) makes and it's important to be aware of them.
 
 * The table structure of spree_core is not touched.
   Spree digital lives parallel to spree_core and does change the existing database, except adding two new tables.
 * The download links will be sent via email in the order confirmation (or "resend" from the admin section).
   The links do *not* appear in the order "overview" that the customer sees.
-  Adding download buttons to `OrdersController#show` is easy, [check out this gist](https://gist.github.com/3187793#file_add_spree_digital_buttons_to_invoice.rb).
+  Adding download buttons to `OrdersController#show` is easy, [check out this gist](https://gist.github.com/3187793#file_add_solidus_digital_buttons_to_invoice.rb).
 * Once the order is checked-out, the download links will immediately be sent (i.e. in the order confirmation).
   You'll have to modify the system to support 'delayed' payments (like a billable account).
 * You should create a ShippingMethod based on the Digital Delivery calculator type.
   The default cost for digital delivery is 0, but you can define a flat rate (creating a per-item digital delivery fee would be possible as well).
-  Checkout the [source code](https://github.com/halo/spree_digital/blob/master/app/models/spree/calculator/digital_delivery.rb) for the Digital Delivery calculator for more information.
+  Checkout the [source code](https://github.com/halo/solidus_digital/blob/master/app/models/spree/calculator/digital_delivery.rb) for the Digital Delivery calculator for more information.
 * One may buy several items of the same digital product in one cart.
   The customer will simply receive several links by doing so.
   This allows customer's to legally purchase multiple copies of the same product and maybe give one away to a friend.
 * You can set how many times (clicks) the users downloads will work.
   You can also set how long the users links will work (expiration).
-  For more information, [check out the preferences object](https://github.com/halo/spree_digital/blob/master/lib/spree/spree_digital_configuration.rb)
+  For more information, [check out the preferences object](https://github.com/halo/solidus_digital/blob/master/lib/spree/solidus_digital_configuration.rb)
 * The file `views/order_mailer/confirm_email.text.erb` needs to be customized by you.
-  If you are looking for HTML emails, [this branch of spree-html-email](http://github.com/iloveitaly/spree-html-email) supports spree_digital.
+  If you are looking for HTML emails, [this branch of spree-html-email](http://github.com/iloveitaly/spree-html-email) supports solidus_digital.
 * A purchased product can be downloaded even if you disable the product immediately.
   You would have to remove the attached file in your admin section to prevent people from downloading purchased products.
 * File are uploaded to `RAILS_ROOT/private`.
   Make sure it's symlinked in case you're using Capistrano.
-  If you want to change the upload path, [check out this gist](https://gist.github.com/3187793#file_spree_digital_path_change_decorator.rb).
+  If you want to change the upload path, [check out this gist](https://gist.github.com/3187793#file_solidus_digital_path_change_decorator.rb).
 * You must add a `views/spree/digitals/unauthorized.html.erb` file to customize an error message to the user if they exceed the download / days limit
 * We use send_file to send the files on download.
   See below for instructions on how to push file downloading off to nginx.
@@ -45,13 +45,13 @@ Add this line to the `Gemfile` in your Spree project:
 
 ```ruby
 # Depending on your Spree version, you may use another branch
-gem 'spree_digital', github: 'halo/spree_digital', branch: '3-0-stable'
+gem 'solidus_digital', github: 'denkungsart/solidus_digital'
 ```
 
 The following terminal commands will copy the migration files to the corresponding directory in your Rails application and apply the migrations to your database.
 
 ```shell
-bundle exec rails g spree_digital:install
+bundle exec rails g solidus_digital:install
 bundle exec rake db:migrate
 ```
 
@@ -60,7 +60,7 @@ Then set any preferences in the web interface.
 ### Shipping Configuration
 
 You should create a ShippingMethod based on the Digital Delivery calculator type.
-It will be detected by `spree_digital`.
+It will be detected by `solidus_digital`.
 Otherwise your customer will be forced to choose something like "UPS" even if they purchase only downloadable products.
 
 ### Improving File Downloading: `send_file` + nginx
@@ -110,7 +110,7 @@ server {
 References:
 
 * [Gist of example config](https://gist.github.com/416004)
-* [Change paperclip's upload / download path](https://gist.github.com/3187793#file_spree_digital_path_change_decorator.rb)
+* [Change paperclip's upload / download path](https://gist.github.com/3187793#file_solidus_digital_path_change_decorator.rb)
 * ["X-Accel-Mapping header missing" in nginx error log](http://stackoverflow.com/questions/6237016/message-x-accel-mapping-header-missing-in-nginx-error-log)
 * [Another good, but older, explanation](http://kovyrin.net/2006/11/01/nginx-x-accel-redirect-php-rails/)
 
@@ -118,7 +118,7 @@ References:
 
 #### Table Diagram
 
-<img src="https://cdn.rawgit.com/halo/spree_digital/master/doc/tables.png">
+<img src="https://cdn.rawgit.com/halo/solidus_digital/master/doc/tables.png">
 
 #### Testing
 
@@ -129,8 +129,8 @@ rake rspec
 
 ### Contributors
 
-See https://github.com/halo/spree_digital/graphs/contributors
+See https://github.com/halo/solidus_digital/graphs/contributors
 
 ### License
 
-MIT © 2011-2015 halo, see [LICENSE](http://github.com/halo/spree_digital/blob/master/LICENSE.md)
+MIT © 2011-2015 halo, see [LICENSE](http://github.com/halo/solidus_digital/blob/master/LICENSE.md)

@@ -1,10 +1,10 @@
-module SpreeDigital
+module SolidusDigital
   class Engine < Rails::Engine
-    engine_name 'spree_digital'
+    engine_name 'solidus_digital'
 
     config.autoload_paths += %W(#{config.root}/lib)
 
-    initializer "spree.spree_digital.preferences", :after => "spree.environment" do |app|
+    initializer "spree.solidus_digital.preferences", :after => "spree.environment" do |app|
       Spree::DigitalConfiguration = Spree::SpreeDigitalConfiguration.new
     end
 
@@ -12,8 +12,8 @@ module SpreeDigital
       app.config.spree.calculators.shipping_methods << Spree::Calculator::Shipping::DigitalDelivery
     end
 
-    initializer 'spree_digital.custom_spree_splitters', :after => 'spree.register.stock_splitters' do |app|
-      app.config.spree.stock_splitters << Spree::Stock::Splitter::Digital
+    initializer 'solidus_digital.custom_spree_splitters', :after => 'spree.register.stock_splitters' do |app|
+      app.config.spree.stock_splitters << Spree::Stock::Splitter::DigitalSplitter
     end
 
     def self.activate

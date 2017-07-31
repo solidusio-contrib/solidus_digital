@@ -1,7 +1,7 @@
 module Spree
   module Stock
     module Splitter
-      class Digital < Base
+      class DigitalSplitter < Spree::Stock::Splitter::Base
         def split(packages)
           split_packages = []
           packages.each do |package|

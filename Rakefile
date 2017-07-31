@@ -6,7 +6,7 @@ require 'spree/testing_support/common_rake'
 
 RSpec::Core::RakeTask.new
 
-task :default => [:spec]
+task default: :spec
 
 desc "Regenerates a rails 3 app for testing"
 task :test_app do

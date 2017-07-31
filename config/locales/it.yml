@@ -18,5 +18,5 @@ it:
       unauthorized:
         explained: This download link has expired.
         unauthorized: Unauthorized
-  spree_digital:
+  solidus_digital:
     upload: Upload

@@ -20,5 +20,5 @@ es:
       unauthorized:
         explained: El enlace para la descarga ha expirado
         unauthorized: No estás autorizado
-  spree_digital:
+  solidus_digital:
     upload: Subir

@@ -3,7 +3,7 @@ require 'spec_helper'
 module Spree
   module Stock
     module Splitter
-      RSpec.describe Digital do
+      RSpec.describe DigitalSplitter do
 
         let(:packer) { build(:stock_packer) }
 
@@ -13,7 +13,7 @@ module Spree
         let(:item4) { create(:inventory_unit, variant: create(:digital).variant) }
         let(:item5) { create(:inventory_unit, variant: create(:digital).variant) }
 
-        subject { Digital.new(packer) }
+        subject { DigitalSplitter.new(packer) }
 
         it 'splits each package by product' do
           package1 = Package.new(packer.stock_location)

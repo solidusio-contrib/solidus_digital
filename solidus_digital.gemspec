@@ -1,7 +1,13 @@
+# encoding: utf-8
+lib = File.expand_path('../lib/', __FILE__)
+$LOAD_PATH.unshift lib unless $LOAD_PATH.include?(lib)
+
+require 'solidus_digital/version'
+
 Gem::Specification.new do |s|
   s.platform     = Gem::Platform::RUBY
   s.name         = 'solidus_digital'
-  s.version      = '1.2'
+  s.version      = SolidusDigital.version
   s.summary      = ''
   s.description  = 'Digital download functionality for Solidus'
   s.authors      = ['funkensturm', 'Michael Bianco']
@@ -19,6 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'solidus_frontend'
 
   # test suite
+  s.add_development_dependency 'shoulda'
   s.add_development_dependency 'shoulda-matchers'
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'coffee-script'
@@ -30,4 +37,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'ffaker'
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'simplecov'
+  s.add_development_dependency 'rails-controller-testing'
 end
