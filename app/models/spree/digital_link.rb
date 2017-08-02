@@ -1,16 +1,15 @@
 module Spree
   class DigitalLink < ActiveRecord::Base
-
     belongs_to :digital
-    validates :digital, :presence => true
+    validates :digital, presence: true
 
     belongs_to :line_item
 
-    validates_length_of :secret, :is => 30
+    validates_length_of :secret, is: 30
 
-    before_validation :set_defaults, :on => :create
+    before_validation :set_defaults, on: :create
 
-    # Can this link stil be used? It is valid if it's less than 24 hours old and was not accessed more than 3 times
+    # Can this link still be used? It is valid if it's less than 24 hours old and was not accessed more than 3 times
     def authorizable?
       !(expired? || access_limit_exceeded?)
     end

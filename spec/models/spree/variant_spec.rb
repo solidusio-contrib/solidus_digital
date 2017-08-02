@@ -15,7 +15,7 @@ RSpec.describe Spree::Variant do
       variant.deleted_at = Time.now
       expect(variant.deleted?).to be true
       variant.save!
-      expect { digital.reload.present? }.to raise_error
+      expect { digital.reload.present? }.to raise_error(ActiveRecord::RecordNotFound)
       expect(Spree::Digital.count).to eq(0)
     end
 

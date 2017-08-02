@@ -133,7 +133,6 @@ RSpec.describe Spree::Order do
     end
 
     it 'should return an empty set for an exclusively non-digital order' do
-      non_digital_order_digital_line_items = non_digital_order.digital_line_items
       expect(non_digital_order.digital_line_items).to be_empty
     end
   end

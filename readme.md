@@ -44,7 +44,6 @@ There are a few assumptions that solidus_digital (currently) makes and it's impo
 Add this line to the `Gemfile` in your Spree project:
 
 ```ruby
-# Depending on your Spree version, you may use another branch
 gem 'solidus_digital', github: 'denkungsart/solidus_digital'
 ```
 

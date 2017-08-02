@@ -3,7 +3,7 @@ Spree::Order.class_eval do
   def digital?
     line_items.all? { |item| item.digital? }
   end
-  
+
   def some_digital?
     line_items.any? { |item| item.digital? }
   end
@@ -21,5 +21,4 @@ Spree::Order.class_eval do
       digital_link.reset!
     end
   end
-
 end
