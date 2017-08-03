@@ -1,28 +1,28 @@
 en:
   spree:
     controller:
-      controller_name: Digitals
+      controller_name: Digitale Produkte
     digitals:
-      broken_file: Warning! this file is broken
-      current_file: Current File
-      delete_file: Delete this file
-      delete_file_confirmation: Are you sure you want to delete the file %{filename}?
-      digitals: Digitals
-      digital_delivery: Digital Delivery
+      broken_file: Achtung! Diese Datei ist korrupt
+      current_file: Aktuelle Datei
+      delete_file: Diese Datei löschen
+      delete_file_confirmation: Sind Sie sicher, dass die Datei %{filename} gelöscht werden soll?
+      digitals: Digitale Produkte
+      digital_delivery: Digitale Auslieferung
       digital_download: Download %{filename} ↓
-      digital_download_links: Digital Download Links
+      digital_download_links: Digitale Download Links
       digital_format:
         mp3: Audio MP3
         mobi: Kindle eBook
         epub: ePub eBook
-        pdf: pdf eBook
-        zip: ZIP file
-      digital_versions: Digital Versions
-      downloads_reset: Digital Downloads Reset
-      files: Files
-      new_file: New File
-      reset_downloads: Reset Digital Downloads
+        pdf: PDF eBook
+        zip: ZIP-Datei
+      digital_versions: Digitale Versionen
+      downloads_reset: Digitale Downloads zurücksetzen
+      files: Dateien
+      new_file: Neue Datei
+      reset_downloads: Digitale Downloads zurücksetzen
       unauthorized:
-        explained: This download link has expired.
-        unauthorized: Unauthorized
+        explained: Der Download-Link ist nicht mehr gültig.
+        unauthorized: Fehlende Berechtigung
       upload: Upload
