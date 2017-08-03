@@ -1,5 +1,5 @@
 <!-- insert_bottom "td[data-hook='order_item_description']" -->
-<% if @order.state == 'complete' and item.variant.digital? %>
+<% if @order.complete? && item.variant.digital? %>
   <div data-hook='download_links'>
     <ul>
       <% item.digital_links.each do |digital_link| %>

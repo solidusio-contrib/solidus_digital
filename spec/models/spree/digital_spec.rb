@@ -1,13 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe Spree::Digital do
-
   context 'validation' do
     it { is_expected.to belong_to(:variant) }
-  end
-
-  context "#create" do
-
   end
 
   context "#destroy" do
@@ -21,4 +16,3 @@ RSpec.describe Spree::Digital do
     end
   end
 end
-
