@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 RSpec.describe Spree::Variant do
-
   context "#destroy" do
     let(:variant) { create(:variant) }
     let!(:digital) { create(:digital, variant: variant) }
@@ -12,9 +11,11 @@ RSpec.describe Spree::Variant do
 
       expect(Spree::Digital.count).to eq(1)
       expect(variant.digitals.present?).to be true
+
       variant.deleted_at = Time.now
       expect(variant.deleted?).to be true
       variant.save!
+
       expect { digital.reload.present? }.to raise_error(ActiveRecord::RecordNotFound)
       expect(Spree::Digital.count).to eq(0)
     end
@@ -24,6 +25,7 @@ RSpec.describe Spree::Variant do
 
       expect(Spree::Digital.count).to eq(1)
       expect(variant.digitals.present?).to be true
+
       variant.deleted_at = Time.now
       variant.save!
       expect(variant.deleted?).to be true

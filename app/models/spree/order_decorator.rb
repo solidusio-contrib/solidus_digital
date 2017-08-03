@@ -1,4 +1,8 @@
-Spree::Order.class_eval do
+module OrderDecorator
+  def self.prepended(base)
+    base.state_machine.after_transition to: :complete, do: :generate_digital_links, if: :some_digital?
+  end
+
   # all products are digital
   def digital?
     line_items.all? { |item| item.digital? }
@@ -21,4 +25,11 @@ Spree::Order.class_eval do
       digital_link.reset!
     end
   end
+
+  private
+    def generate_digital_links
+      line_items.each { |li| li.create_digital_links if li.digital? }
+    end
 end
+
+Spree::Order.prepend OrderDecorator
