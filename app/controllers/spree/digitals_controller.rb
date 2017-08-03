@@ -38,11 +38,11 @@ module Spree
       end
 
       def attachment
-        @attachment ||= digital_link.digital.try(:attachment) if digital_link.present?
+        @attachment ||= digital_link&.attachment
       end
 
       def resource_not_found
-        head status: 404
+        render body: nil, status: 404
       end
 
       def ssl_configured?

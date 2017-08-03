@@ -33,6 +33,10 @@ module Spree
       update_column :created_at, Time.now
     end
 
+    def attachment
+      digital.attachment
+    end
+
     private
 
     # Populating the secret automatically and zero'ing the access_counter (otherwise it might turn out to be NULL)

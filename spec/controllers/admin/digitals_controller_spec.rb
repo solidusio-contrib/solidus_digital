@@ -76,7 +76,7 @@ RSpec.describe Spree::Admin::DigitalsController do
     context 'for a digital and product that exist' do
       it 'deletes the associated digital' do
         expect {
-          delete :destroy, { product_id: product.slug, id: digital.id }
+          delete :destroy, params: { product_id: product.slug, id: digital.id }
           expect(response).to redirect_to(spree.admin_product_digitals_path(product))
         }.to change(Spree::Digital, :count).by(-1)
       end
