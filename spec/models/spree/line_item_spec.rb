@@ -3,7 +3,8 @@ require 'spree/testing_support/order_walkthrough'
 
 RSpec.describe Spree::LineItem do
   let(:order) { create(:order) }
-  let!(:digital_variant) { create(:variant, digitals: [create(:digital)]) }
+  let(:digital) { create(:digital) }
+  let!(:digital_variant) { create(:variant, digitals: [digital]) }
   let!(:master_digital_variant) { create(:on_demand_master_variant, digitals: [create(:digital)]) }
 
   context "#digital?" do
@@ -13,6 +14,19 @@ RSpec.describe Spree::LineItem do
 
       expect(digital_variant).to be_digital
       expect(master_digital_variant).to be_digital
+    end
+  end
+
+  context "#create_digital_links" do
+    context "digital has drm restrictions" do
+      let(:digital) { create(:digital, drm: true) }
+      let(:line_item) { create(:line_item, order: order, variant: digital_variant) }
+
+      it "creates digital link to drm record" do
+        line_item.create_digital_links
+
+        expect(digital.drm_records.count).to eq(1)
+      end
     end
   end
 

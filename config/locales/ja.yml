@@ -6,6 +6,7 @@ ja:
   digital_shipping: ダウンロードリンクを<strong>%{email}</strong>に送ります
   digital_versions: デジタル版
   new_file: 新しいファイル
+  file_is_not_ready: File is processing, please stand by
   spree:
     digitals:
       unauthorized:
