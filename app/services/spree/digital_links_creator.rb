@@ -1,4 +1,4 @@
-class DigitalLinksCreator
+class Spree::DigitalLinksCreator
   attr_reader :line_item
 
   delegate :quantity, :digital_links, :variant, :master, to: :line_item

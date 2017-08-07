@@ -35,7 +35,7 @@ module Spree
 
     def attachment
       if digital.drm?
-        digital.drm_records.find_by(line_item: line_item)&.attachment
+        digital.drm_records.find_by(line_item: line_item).attachment
       else
         digital.attachment
       end

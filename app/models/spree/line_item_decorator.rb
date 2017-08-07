@@ -6,6 +6,6 @@ Spree::LineItem.class_eval do
   end
 
   def create_digital_links
-    DigitalLinksCreator.new(self).create_digital_links
+    Spree::DigitalLinksCreator.new(self).create_digital_links
   end
 end
