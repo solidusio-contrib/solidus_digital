@@ -4,15 +4,15 @@ module SolidusDigital
 
     config.autoload_paths += %W(#{config.root}/lib)
 
-    initializer "spree.solidus_digital.preferences", :after => "spree.environment" do |app|
+    initializer "spree.solidus_digital.preferences", after: "spree.environment" do |app|
       Spree::DigitalConfiguration = Spree::SpreeDigitalConfiguration.new
     end
 
-    initializer "spree.register.digital_shipping", :after => 'spree.register.calculators' do |app|
+    initializer "spree.register.digital_shipping", after: 'spree.register.calculators' do |app|
       app.config.spree.calculators.shipping_methods << Spree::Calculator::Shipping::DigitalDelivery
     end
 
-    initializer 'solidus_digital.custom_spree_splitters', :after => 'spree.register.stock_splitters' do |app|
+    initializer 'solidus_digital.custom_spree_splitters', after: 'spree.register.stock_splitters' do |app|
       app.config.spree.stock_splitters << Spree::Stock::Splitter::DigitalSplitter
     end
 

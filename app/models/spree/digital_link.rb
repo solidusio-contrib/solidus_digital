@@ -1,13 +1,13 @@
 module Spree
   class DigitalLink < ActiveRecord::Base
     belongs_to :digital
-    validates :digital, presence: true
-
     belongs_to :line_item
 
+    validates :digital, presence: true
     validates_length_of :secret, is: 30
-
     before_validation :set_defaults, on: :create
+
+    delegate :attachment_file_name, to: :digital
 
     # Can this link still be used? It is valid if it's less than 24 hours old and was not accessed more than 3 times
     def authorizable?
@@ -34,7 +34,11 @@ module Spree
     end
 
     def attachment
-      digital.attachment
+      if digital.drm?
+        digital.drm_records.find_by(line_item: line_item).attachment
+      else
+        digital.attachment
+      end
     end
 
     private

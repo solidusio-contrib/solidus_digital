@@ -6,6 +6,7 @@ es:
   digital_delivery: Entrega digital
   digital_download: Descarga %{filename} ↓
   digital_download_links: Enlaces para la descaga digital
+  file_is_not_ready: File is processing, please stand by
   digital_format:
     mp3: Audio MP3
     mobi: Kindle eBook

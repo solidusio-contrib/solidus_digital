@@ -2,7 +2,7 @@ module Spree
   module Admin
     class DigitalsController < ResourceController
       belongs_to "spree/product", :find_by => :slug
-      
+
       def create
         invoke_callbacks(:create, :before)
         @object.attributes = permitted_resource_params
@@ -26,7 +26,7 @@ module Spree
       end
 
       def permitted_digital_attributes
-        [:variant_id, :attachment]
+        [:variant_id, :drm, :attachment]
       end
     end
   end

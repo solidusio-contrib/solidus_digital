@@ -29,6 +29,8 @@
         <%= f.field_container :file do %>
           <%= f.label :file, Spree.t(:new_file, scope: 'digitals') %> <span class="required">*</span><br/>
           <%= f.file_field :attachment %>
+          <%= f.label :drm %>
+          <%= f.check_box :drm %>
         <% end %>
 
         <%= hidden_field_tag 'digital[variant_id]', variant.id %>

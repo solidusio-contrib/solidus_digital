@@ -12,7 +12,7 @@ module Spree
             if Paperclip::Attachment.default_options[:storage] == :s3
               redirect_to attachment.expiring_url(Spree::DigitalConfiguration[:s3_expiration_seconds]) and return
             else
-              send_file attachment.path, :filename => attachment.original_filename, :type => attachment.content_type and return
+              send_file attachment.path, filename: attachment.original_filename, type: attachment.content_type and return
             end
           end
         else
@@ -24,7 +24,6 @@ module Spree
     end
 
     private
-
       def attachment_is_file?
         if Paperclip::Attachment.default_options[:storage] == :s3
           attachment.exists?

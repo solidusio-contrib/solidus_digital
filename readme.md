@@ -1,13 +1,9 @@
-This is a Solidus extension to enable downloadable products (ebooks, MP3s, videos, etc).
-
-In the [Versionfile](https://github.com/spree-contrib/solidus_digital/blob/master/Versionfile) you can see which
-[solidus_digital branch](https://github.com/spree-contrib/solidus_digital/branches/all?query=stable) supports which
-[Spree version](https://github.com/spree/spree/branches/all?query=stable).
-The master branch is not considered stable and corresponds to the [spree master branch](https://github.com/spree/spree).
+This is a [Solidus](http://solidus.io/) extension to enable downloadable products (ebooks, MP3s, videos, etc).
 
 This documentation is not complete and possibly out of date in some cases.
 There are features that have been implemented that are not documented here, please look at the source for complete documentation.
 
+### Digital products
 The idea is simple.
 You attach a file to a Product (or a Variant of this Product) and when people buy it, they will receive a link via email where they can download it once.
 There are a few assumptions that solidus_digital (currently) makes and it's important to be aware of them.
@@ -39,6 +35,10 @@ There are a few assumptions that solidus_digital (currently) makes and it's impo
 * We use send_file to send the files on download.
   See below for instructions on how to push file downloading off to nginx.
 
+## Issues
+
+Current version of `solidus_digital` is not compatable with `solidus` version 2.3.0.
+
 ## Quickstart
 
 Add this line to the `Gemfile` in your Spree project:
@@ -61,6 +61,41 @@ Then set any preferences in the web interface.
 You should create a ShippingMethod based on the Digital Delivery calculator type.
 It will be detected by `solidus_digital`.
 Otherwise your customer will be forced to choose something like "UPS" even if they purchase only downloadable products.
+
+### DRM
+
+If you want to create attachment with [DRM](https://en.wikipedia.org/wiki/Digital_rights_management) for your digital product, e.g.: _watermark_ or _digital signature_,
+you'll need to implement a class which will transform original attachement from `Spree::Digital` class, to modified attachment. This attachment will be stored as `Spree::DrmRecord` which is assigned to `Spree::Digital` class. And check "DRM" checkbox while creating Digital for product.
+
+For example:
+```ruby
+class SampleDrmMaker
+  def initialize(drm_record)
+    @drm_record = drm_record
+  end
+
+  def create!
+    # DRM file attachment specific code
+    @drm_record.attachment = drm_attachemnt
+  end
+end
+```
+
+Then insert it into `DrmClass`:
+```ruby
+
+Spree::DrmRecord.class_eval do
+  private
+  def prepare_drm_mark
+    SampleDrmMaker.new(self).create!
+  end
+end
+```
+
+`prepare_drm_mark` method will call **before_create** for `Spree::DrmRecord`. We'd suggest to run your drm maker class in parallel with [Delayed::Job](https://github.com/collectiveidea/delayed_job) or [Sidekiq](https://github.com/mperham/sidekiq).
+
+Every time user confirms order on checkout process, new `Spree::DrmRecord` will be created for every `LineItem` which has digital product with enabled `DRM` flag.
+
 
 ### Improving File Downloading: `send_file` + nginx
 

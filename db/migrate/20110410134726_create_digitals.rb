@@ -1,5 +1,4 @@
 class CreateDigitals < ActiveRecord::Migration[4.2]
-
   def self.up
     create_table :digitals do |t|
       t.integer :variant_id
@@ -26,5 +25,4 @@ class CreateDigitals < ActiveRecord::Migration[4.2]
     drop_table :digitals
     drop_table :digital_links
   end
-
 end

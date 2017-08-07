@@ -15,32 +15,39 @@ RSpec.describe Spree::Admin::DigitalsController do
       end
       let(:variants_without_digitals) { 3.times.map { create(:variant, product: product) } }
 
-      it "should display an empty page when no digitals exist" do
+      it "displays an empty page when no digitals exist" do
         variants_without_digitals
         get :index, params: { product_id: product.slug }
       end
 
-      it "should display list of digitals when they exist" do
+      it "displays list of digitals when they exist" do
+        variants_with_digitals
+        get :index, params: { product_id: product.slug }
 
+        variants_with_digitals.each do |variant|
+          variant.digitals.each do |digital|
+            expect(response.body).to include(digital.attachment_file_name)
+          end
+        end
       end
     end
 
     context "without non-master variants" do
 
-      it "should display an empty page when the master variant is not digital" do
+      it "displays an empty page when the master variant is not digital" do
         get :index, params: { product_id: product.slug }
         expect(response.code).to eq("200")
         expect(response.body).to include("This product has no variants")
         expect(response.body).not_to include('A digital version of this product currently exists')
       end
 
-      it "should display the variant details when the master is digital" do
+      it "displays the variant details when the master is digital" do
         @digital = create :digital, :variant => product.master
         get :index, params: { product_id: product.slug }
+
         expect(response.code).to eq("200")
         expect(response.body).to include('A digital version of this product currently exists')
       end
-
     end
   end
 
