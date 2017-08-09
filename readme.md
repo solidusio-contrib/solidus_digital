@@ -92,7 +92,7 @@ Spree::DrmRecord.class_eval do
 end
 ```
 
-`prepare_drm_mark` method will call **before_create** for `Spree::DrmRecord`. We'd suggest to run your drm maker class in parallel with [Delayed::Job](https://github.com/collectiveidea/delayed_job) or [Sidekiq](https://github.com/mperham/sidekiq).
+`prepare_drm_mark` method will call **after_create** for `Spree::DrmRecord`. We'd suggest to run your drm maker class in parallel with [Delayed::Job](https://github.com/collectiveidea/delayed_job) or [Sidekiq](https://github.com/mperham/sidekiq).
 
 Every time user confirms order on checkout process, new `Spree::DrmRecord` will be created for every `LineItem` which has digital product with enabled `DRM` flag.
 
