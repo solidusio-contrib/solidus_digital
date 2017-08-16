@@ -44,6 +44,11 @@ RSpec.describe Spree::DigitalLink do
       expect { link.authorize! }.to change(link, :access_counter).by(1)
     end
 
+    it "should be #authorized? when configuration for access_counter set to nil " do
+      Spree::DigitalConfiguration[:authorized_clicks] = nil
+      expect(link.authorizable?).to be true
+    end
+
     it "should not be #authorized? when the access_counter is too high" do
       allow(link).to receive_messages(access_counter: Spree::DigitalConfiguration[:authorized_clicks] - 1)
       expect(link.authorizable?).to be true

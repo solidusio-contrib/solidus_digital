@@ -1,6 +1,7 @@
 module Spree
   class SpreeDigitalConfiguration < Preferences::Configuration
     # number of times a customer can download a digital file
+    # nil - infinite number of clicks
     preference :authorized_clicks,  :integer, default: 3
 
     # number of days after initial purchase the customer can download a file

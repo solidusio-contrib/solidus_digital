@@ -19,6 +19,8 @@ module Spree
     end
 
     def access_limit_exceeded?
+      return false if Spree::DigitalConfiguration[:authorized_clicks].nil?
+
       self.access_counter >= Spree::DigitalConfiguration[:authorized_clicks]
     end
 

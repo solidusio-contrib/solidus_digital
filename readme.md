@@ -62,6 +62,34 @@ You should create a ShippingMethod based on the Digital Delivery calculator type
 It will be detected by `solidus_digital`.
 Otherwise your customer will be forced to choose something like "UPS" even if they purchase only downloadable products.
 
+### Links access configuration
+
+Configuration class `Spree::DigitalConfiguration`.
+Default configuration:
+
+```ruby
+class SpreeDigitalConfiguration < Preferences::Configuration
+  # number of times a customer can download a digital file
+  # nil - infinite number of clicks
+  preference :authorized_clicks,  :integer, default: 3
+
+  # number of days after initial purchase the customer can download a file
+  preference :authorized_days,    :integer, default: 2
+
+  # should digitals be kept around after the associated product is destroyed
+  preference :keep_digitals,      :boolean, default: false
+
+  #number of seconds before an s3 link expires
+  preference :s3_expiration_seconds,    :integer, default: 10
+end
+
+```
+
+Example:
+```ruby
+Spree::DigitalConfiguration[:authorized_clicks] = nil # infinite access for user
+```
+
 ### DRM
 
 If you want to create attachment with [DRM](https://en.wikipedia.org/wiki/Digital_rights_management) for your digital product, e.g.: _watermark_ or _digital signature_,
@@ -152,7 +180,7 @@ References:
 
 #### Table Diagram
 
-<img src="https://cdn.rawgit.com/halo/solidus_digital/master/doc/tables.png">
+<img src="https://camo.githubusercontent.com/5fc9017154dc2ea3463e59cb76f7860597f2d3ff/68747470733a2f2f63646e2e7261776769742e636f6d2f68616c6f2f73707265655f6469676974616c2f6d61737465722f646f632f7461626c65732e706e67">
 
 #### Testing
 
