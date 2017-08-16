@@ -18,14 +18,52 @@ RSpec.describe Spree::LineItem do
   end
 
   context "#create_digital_links" do
+    let(:line_item) { create(:line_item, order: order, variant: digital_variant) }
+
     context "digital has drm restrictions" do
       let(:digital) { create(:digital, drm: true) }
-      let(:line_item) { create(:line_item, order: order, variant: digital_variant) }
 
       it "creates digital link to drm record" do
         line_item.create_digital_links
 
         expect(digital.drm_records.count).to eq(1)
+      end
+    end
+
+    context "digital links" do
+      let(:digital) { create(:digital) }
+      before do
+        line_item.quantity = 8
+        line_item.save
+      end
+      after { Spree::DigitalConfiguration[:digital_links_count] = "quantity" }
+
+      context "when :digital_links_count settings set to 'quantity' (default)" do
+        it "generates quantity x count digital links " do
+          line_item.create_digital_links
+
+          expect(digital.digital_links.count).to eq(8)
+        end
+      end
+
+      context "when :digital_links_count settings set to '1'" do
+        before { Spree::DigitalConfiguration[:digital_links_count] = "1" }
+
+        it "generates quantity x count digital links " do
+          line_item.create_digital_links
+
+          expect(digital.digital_links.count).to eq(1)
+        end
+      end
+
+      context "when :digital_links_count settings set to '-1'" do
+        before { Spree::DigitalConfiguration[:digital_links_count] = "-1" }
+
+        it "generates quantity x count digital links " do
+          line_item.create_digital_links
+
+          expect(digital.digital_links.count).to eq(1)
+        end
       end
     end
   end

@@ -9,7 +9,7 @@ module SolidusDigital
 
   module VERSION
     MAJOR = 1
-    MINOR = 6
+    MINOR = 7
     TINY  = 1
     PRE   = nil
 
