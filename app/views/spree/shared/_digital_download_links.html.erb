@@ -1,0 +1,17 @@
+<% if @order.complete? && item.variant.digital? %>
+  <div data-hook='download_links'>
+    <ul>
+      <% item.digital_links.each do |digital_link| %>
+        <% next if digital_link.attachment.nil? %>
+        <% if digital_link.attachment.exists? %>
+          <% format = File.extname(digital_link.attachment.path).downcase %>
+          <li>
+            <%= link_to Spree.t(:digital_download, scope: 'digitals', filename: raw(digital_link.attachment_file_name)), digital_url(secret: digital_link.secret), class: "#{format}" %>
+          </li>
+        <% else %>
+          <%= Spree.t(:file_is_not_ready, scope: 'digitals') %>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
