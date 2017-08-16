@@ -20,7 +20,12 @@ class Spree::DigitalLinksCreator
     def create_digital_links_for_variant(variant)
       variant.digitals.each do |digital|
         digital.create_drm_record(line_item) if digital.drm?
-        quantity.times { digital_links.create!(digital: digital) }
+        digital_links_count.times { digital_links.create!(digital: digital) }
       end
+    end
+
+    def digital_links_count
+      count = Spree::DigitalConfiguration[:digital_links_count]
+      count == 'quantity' ? quantity : Integer(count).abs
     end
 end
