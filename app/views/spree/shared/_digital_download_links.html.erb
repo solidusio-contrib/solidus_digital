@@ -3,7 +3,7 @@
     <ul>
       <% item.digital_links.each do |digital_link| %>
         <% next if digital_link.attachment.nil? %>
-        <% if digital_link.attachment.exists? %>
+        <% if digital_link.ready? %>
           <% format = File.extname(digital_link.attachment.path).downcase %>
           <li>
             <%= link_to Spree.t(:digital_download, scope: 'digitals', filename: raw(digital_link.attachment_file_name)), digital_url(secret: digital_link.secret), class: "#{format}" %>

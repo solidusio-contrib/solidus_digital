@@ -18,6 +18,10 @@ module Spree
       self.created_at <= Spree::DigitalConfiguration[:authorized_days].day.ago
     end
 
+    def ready?
+      attachment.exists?
+    end
+
     def access_limit_exceeded?
       return false if Spree::DigitalConfiguration[:authorized_clicks].nil?
 
