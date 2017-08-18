@@ -13,6 +13,10 @@ module Spree
       attachment_definitions[:attachment][:s3_headers] = { content_disposition: 'attachment' }
     end
 
+    def cloud?
+      Paperclip::Attachment.default_options[:storage] == :s3
+    end
+
     def create_drm_record(line_item)
       drm_records.create!(line_item: line_item)
     end

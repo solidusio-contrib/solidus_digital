@@ -7,7 +7,7 @@ module Spree
     validates_length_of :secret, is: 30
     before_validation :set_defaults, on: :create
 
-    delegate :attachment_file_name, to: :digital
+    delegate :attachment_file_name, :cloud?, to: :digital
 
     # Can this link still be used? It is valid if it's less than 24 hours old and was not accessed more than 3 times
     def authorizable?
@@ -20,6 +20,10 @@ module Spree
 
     def ready?
       attachment.exists?
+    end
+
+    def file_exists?
+      cloud? ? attachment.exists? : File.file?(attachment.path)
     end
 
     def access_limit_exceeded?

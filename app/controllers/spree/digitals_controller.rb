@@ -2,34 +2,21 @@ module Spree
   class DigitalsController < Spree::StoreController
     force_ssl only: :show, if: :ssl_configured?
     rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found
+    before_action :authorize_digital_link, only: :show
 
     def show
-      if attachment.present?
-        # don't authorize the link unless the file exists
-        # the logger error will help track down customer issues easier
-        if attachment_is_file?
-          if digital_link.authorize!
-            if Paperclip::Attachment.default_options[:storage] == :s3
-              redirect_to attachment.expiring_url(Spree::DigitalConfiguration[:s3_expiration_seconds]) and return
-            else
-              send_file attachment.path, filename: attachment.original_filename, type: attachment.content_type and return
-            end
-          end
-        else
-          Rails.logger.error "Missing Digital Item: #{attachment.path}"
-        end
+      if digital_link.cloud?
+        redirect_to attachment.expiring_url(Spree::DigitalConfiguration[:s3_expiration_seconds])
+      else
+        send_file attachment.path, filename: attachment.original_filename, type: attachment.content_type
       end
-
-      render :unauthorized
     end
 
     private
-      def attachment_is_file?
-        if Paperclip::Attachment.default_options[:storage] == :s3
-          attachment.exists?
-        else
-          File.file?(attachment.path)
-        end
+      def authorize_digital_link
+        # don't authorize the link unless the file exists
+        raise ActiveRecord::RecordNotFound unless attachment.present?
+        render :unauthorized unless digital_link.file_exists? && digital_link.authorize!
       end
 
       def digital_link
@@ -37,7 +24,7 @@ module Spree
       end
 
       def attachment
-        @attachment ||= digital_link&.attachment
+        @attachment ||= digital_link.attachment
       end
 
       def resource_not_found
