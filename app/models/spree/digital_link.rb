@@ -22,7 +22,7 @@ module Spree
       attachment.exists?
     end
 
-    def is_file?
+    def file_exists?
       cloud? ? attachment.exists? : File.file?(attachment.path)
     end
 

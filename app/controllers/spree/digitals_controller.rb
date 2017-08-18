@@ -16,7 +16,7 @@ module Spree
       def authorize_digital_link
         # don't authorize the link unless the file exists
         raise ActiveRecord::RecordNotFound unless attachment.present?
-        render :unauthorized unless digital_link.is_file? && digital_link.authorize!
+        render :unauthorized unless digital_link.file_exists? && digital_link.authorize!
       end
 
       def digital_link
