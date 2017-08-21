@@ -4,7 +4,7 @@ module SolidusDigital
 
     config.autoload_paths += %W(#{config.root}/lib)
 
-    initializer "spree.solidus_digital.preferences", after: "spree.environment" do |app|
+    initializer "spree.solidus_digital.preferences", before: "spree.environment" do |app|
       Spree::DigitalConfiguration = Spree::SpreeDigitalConfiguration.new
     end
 
