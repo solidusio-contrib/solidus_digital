@@ -1,3 +1,0 @@
-<!-- insert_bottom "td[data-hook='order_item_description']" -->
-  <%= render "spree/shared/digital_download_links", item: item %>
-<!-- enabled -->
