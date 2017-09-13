@@ -8,13 +8,13 @@ module Spree
     do_not_validate_attachment_file_type :attachment
     validates_attachment_presence :attachment
 
-    if Paperclip::Attachment.default_options[:storage] == :s3
+    if Paperclip::Attachment.default_options[:storage] == :s3 || attachment_definitions[:attachment][:storage] == :s3
       attachment_definitions[:attachment][:s3_permissions] = :private
       attachment_definitions[:attachment][:s3_headers] = { content_disposition: 'attachment' }
     end
 
     def cloud?
-      Paperclip::Attachment.default_options[:storage] == :s3
+      attachment.options[:storage] == :s3
     end
 
     def create_drm_record(line_item)
