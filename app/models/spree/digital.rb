@@ -4,14 +4,9 @@ module Spree
     has_many :digital_links, dependent: :destroy
     has_many :drm_records, dependent: :destroy
 
-    has_attached_file :attachment, path: ":rails_root/private/digitals/:id/:basename.:extension"
+    has_attached_file :attachment, path: ":rails_root/private/digitals/:id/:basename.:extension", s3_permissions: :private, s3_headers: { content_disposition: 'attachment' }
     do_not_validate_attachment_file_type :attachment
     validates_attachment_presence :attachment
-
-    if Paperclip::Attachment.default_options[:storage] == :s3 || attachment_definitions[:attachment][:storage] == :s3
-      attachment_definitions[:attachment][:s3_permissions] = :private
-      attachment_definitions[:attachment][:s3_headers] = { content_disposition: 'attachment' }
-    end
 
     def cloud?
       attachment.options[:storage] == :s3
