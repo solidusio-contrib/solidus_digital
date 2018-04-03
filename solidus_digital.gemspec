@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
   s.required_ruby_version = '>= 2.1.0'
 
-  s.add_dependency 'solidus_api'
   s.add_dependency 'solidus_backend'
   s.add_dependency 'solidus_core'
   s.add_dependency 'solidus_frontend'
