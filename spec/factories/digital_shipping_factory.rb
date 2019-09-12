@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   # https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md#modifying-factories
 
   factory :digital_shipping_calculator, class: Spree::Calculator::Shipping::DigitalDelivery do
@@ -9,6 +9,6 @@ FactoryGirl.define do
 
   factory :digital_shipping_method, parent: :shipping_method do
     name "Digital Delivery"
-    calculator { FactoryGirl.build :digital_shipping_calculator }
+    calculator { FactoryBot.build :digital_shipping_calculator }
   end
 end

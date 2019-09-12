@@ -11,3 +11,7 @@ module SolidusDigital
     end
   end
 end
+
+RSpec.configure do |config|
+  config.include SolidusDigital::TestingSupport::Helpers
+end
