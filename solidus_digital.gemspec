@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'solidus_frontend'
 
   # test suite
-  s.add_development_dependency 'shoulda'
   s.add_development_dependency 'shoulda-matchers'
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'coffee-script'
