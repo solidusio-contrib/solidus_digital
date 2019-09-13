@@ -8,13 +8,12 @@ ENV["RAILS_ENV"] ||= "test"
 require File.expand_path('dummy/config/environment.rb', __dir__)
 
 require 'solidus_support'
+
 require "solidus_support/extension/feature_helper"
 require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/capybara_ext'
 
 Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each { |f| require f }
-
-FactoryBot.find_definitions
 
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
