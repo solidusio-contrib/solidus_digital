@@ -6,11 +6,6 @@ RSpec.describe Spree::Admin::OrdersController do
 
     before do
       request.env["HTTP_REFERER"] = "http://localhost:3000"
-
-      # ensure no respond_overrides are in effect
-      if Spree::BaseController.spree_responders[:OrdersController].present?
-        Spree::BaseController.spree_responders[:OrdersController].clear
-      end
     end
 
     let(:order) { mock_model(Spree::Order, :complete? => true, :total => 100, :number => 'R123456789') }
