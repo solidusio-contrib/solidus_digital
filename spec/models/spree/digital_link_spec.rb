@@ -39,13 +39,15 @@ RSpec.describe Spree::DigitalLink do
   context "authorization" do
     let(:link) { create(:digital_link) }
 
+    before { Spree::DigitalConfiguration.reset }
+
     it "should increment the counter using #authorize!" do
       expect(link.access_counter).to eq(0)
       expect { link.authorize! }.to change(link, :access_counter).by(1)
     end
 
     it "should be #authorized? when configuration for access_counter set to nil " do
-      Spree::DigitalConfiguration[:authorized_clicks] = nil
+      stub_spree_preferences(Spree::DigitalConfiguration, authorized_clicks: nil)
       expect(link.authorizable?).to be true
     end
 

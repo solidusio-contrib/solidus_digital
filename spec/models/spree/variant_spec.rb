@@ -7,7 +7,7 @@ RSpec.describe Spree::Variant do
 
     it "should destroy associated digitals by default" do
       # default is false
-      Spree::DigitalConfiguration[:keep_digitals] = false
+      stub_spree_preferences(Spree::DigitalConfiguration, keep_digitals: false)
 
       expect(Spree::Digital.count).to eq(1)
       expect(variant.digitals.present?).to be true
@@ -21,7 +21,7 @@ RSpec.describe Spree::Variant do
     end
 
     it "should conditionally keep associated digitals" do
-      Spree::DigitalConfiguration[:keep_digitals] = true
+      stub_spree_preferences(Spree::DigitalConfiguration, keep_digitals: true)
 
       expect(Spree::Digital.count).to eq(1)
       expect(variant.digitals.present?).to be true

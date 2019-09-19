@@ -36,7 +36,7 @@ RSpec.describe Spree::LineItem do
         line_item.quantity = 8
         line_item.save
       end
-      after { Spree::DigitalConfiguration[:digital_links_count] = "quantity" }
+      after { stub_spree_preferences(Spree::DigitalConfiguration, digital_links_count: "quantity") }
 
       context "when :digital_links_count settings set to 'quantity' (default)" do
         it "generates quantity x count digital links " do
@@ -47,7 +47,7 @@ RSpec.describe Spree::LineItem do
       end
 
       context "when :digital_links_count settings set to '1'" do
-        before { Spree::DigitalConfiguration[:digital_links_count] = "1" }
+        before { stub_spree_preferences(Spree::DigitalConfiguration, digital_links_count: "1") }
 
         it "generates quantity x count digital links " do
           line_item.create_digital_links
@@ -57,7 +57,7 @@ RSpec.describe Spree::LineItem do
       end
 
       context "when :digital_links_count settings set to '-1'" do
-        before { Spree::DigitalConfiguration[:digital_links_count] = "-1" }
+        before { stub_spree_preferences(Spree::DigitalConfiguration, digital_links_count: "-1") }
 
         it "generates quantity x count digital links " do
           line_item.create_digital_links
