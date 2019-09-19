@@ -35,7 +35,7 @@
 
         <%= hidden_field_tag 'digital[variant_id]', variant.id %>
         <br>
-        <%= button I18n.t('spree.solidus_digital.upload'), 'add', 'submit', { :class => "btn-success" } %>
+        <%= button_tag I18n.t('spree.solidus_digital.upload'), :class => "btn-success" %>
       </p>
     </fieldset>
   <% end %>
