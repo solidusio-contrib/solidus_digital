@@ -1,3 +1,7 @@
+# solidus_digital
+
+[![CircleCI](https://circleci.com/gh/solidusio-contrib/solidus_digital.svg?style=svg)](https://circleci.com/gh/solidusio-contrib/solidus_digital)
+
 This is a [Solidus](http://solidus.io/) extension to enable downloadable products (ebooks, MP3s, videos, etc).
 
 This documentation is not complete and possibly out of date in some cases.

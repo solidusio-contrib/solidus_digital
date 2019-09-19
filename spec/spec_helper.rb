@@ -1,63 +1,28 @@
-if ENV["COVERAGE"]
-  # Run Coverage report
-  require 'simplecov'
-  SimpleCov.start do
-    add_group 'Controllers', 'app/controllers'
-    add_group 'Helpers', 'app/helpers'
-    add_group 'Mailers', 'app/mailers'
-    add_group 'Models', 'app/models'
-    add_group 'Views', 'app/views'
-    add_group 'Libraries', 'lib'
-  end
-end
+# frozen_string_literal: true
 
-ENV["RAILS_ENV"] = "test"
-require File.expand_path("../dummy/config/environment.rb",  __FILE__)
+require "simplecov"
+SimpleCov.start "rails"
 
-require 'rspec/rails'
-require 'rspec/active_model/mocks'
-require 'database_cleaner'
-require 'ffaker'
-require 'shoulda-matchers'
-require 'rails-controller-testing'
+ENV["RAILS_ENV"] ||= "test"
 
-Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each {|f| require f }
+require File.expand_path('dummy/config/environment.rb', __dir__)
 
-require 'spree/testing_support/factories'
+require 'solidus_support'
+
+require "solidus_support/extension/feature_helper"
 require 'spree/testing_support/controller_requests'
-require 'spree/testing_support/url_helpers'
-require 'spree/testing_support/authorization_helpers'
+require 'spree/testing_support/capybara_ext'
 
-Dir[File.join(File.dirname(__FILE__), "factories/*.rb")].each {|f| require f }
+Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each { |f| require f }
+
+FactoryBot.find_definitions
 
 RSpec.configure do |config|
-
-  config.color = true
-  config.disable_monkey_patching!
-  config.raise_errors_for_deprecations!
   config.infer_spec_type_from_file_location!
-  config.mock_with :rspec
+  config.raise_errors_for_deprecations!
 
-  config.include FactoryGirl::Syntax::Methods
+  config.example_status_persistence_file_path = "./spec/examples.txt"
+
   config.include Spree::TestingSupport::UrlHelpers
-  config.include Spree::TestingSupport::ControllerRequests, :type => :controller
-  config.extend Spree::TestingSupport::AuthorizationHelpers::Controller, :type => :controller
-  config.include SolidusDigital::TestingSupport::Helpers, :type => :controller
-  config.use_transactional_fixtures = false
-
-  config.before(:each) do
-    if RSpec.current_example.metadata[:js]
-      DatabaseCleaner.strategy = :truncation, { except: ['spree_countries', 'spree_zones', 'spree_zone_members', 'spree_states', 'spree_roles'] }
-    else
-      DatabaseCleaner.strategy = :transaction
-    end
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
+  config.include Spree::TestingSupport::ControllerRequests, type: :controller
 end

@@ -26,18 +26,20 @@ RSpec.describe Spree::DigitalLink do
 
     it "should enforce to have an associated digital" do
       link = create(:digital_link)
-      expect { link.update_attributes!(:digital => nil) }.to raise_error(ActiveRecord::RecordInvalid)
+      expect { link.update!(:digital => nil) }.to raise_error(ActiveRecord::RecordInvalid)
     end
 
     it "should not allow an empty or too short secret" do
       link = create(:digital_link)
-      expect { link.update_attributes!(:secret => nil) }.to raise_error(ActiveRecord::RecordInvalid)
-      expect { link.update_attributes!(:secret => 'x' * 25) }.to raise_error(ActiveRecord::RecordInvalid)
+      expect { link.update!(:secret => nil) }.to raise_error(ActiveRecord::RecordInvalid)
+      expect { link.update!(:secret => 'x' * 25) }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 
   context "authorization" do
     let(:link) { create(:digital_link) }
+
+    before { Spree::DigitalConfiguration.reset }
 
     it "should increment the counter using #authorize!" do
       expect(link.access_counter).to eq(0)
@@ -45,7 +47,7 @@ RSpec.describe Spree::DigitalLink do
     end
 
     it "should be #authorized? when configuration for access_counter set to nil " do
-      Spree::DigitalConfiguration[:authorized_clicks] = nil
+      stub_spree_preferences(Spree::DigitalConfiguration, authorized_clicks: nil)
       expect(link.authorizable?).to be true
     end
 

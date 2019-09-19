@@ -1,9 +1,9 @@
 <% if defined?(SpreeFancy) %>
   <% content_for :subheader do %>
-    <h1><%= Spree.t(:unauthorized, scope: 'digitals.unauthorized') %></h1>
+    <h1><%= I18n.t('spree.digitals.unauthorized.unauthorized') %></h1>
   <% end %>
 <% else %>
-  <h1><%= Spree.t(:unauthorized, scope: 'digitals.unauthorized') %></h1>
+  <h1><%= I18n.t('spree.digitals.unauthorized.unauthorized') %></h1>
 <% end %>
 
-<%= Spree.t(:explained, scope: 'digitals.unauthorized') %>
+<%= I18n.t('spree.digitals.unauthorized.explained') %>

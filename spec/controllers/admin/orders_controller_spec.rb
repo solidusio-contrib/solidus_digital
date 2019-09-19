@@ -4,22 +4,26 @@ RSpec.describe Spree::Admin::OrdersController do
   context "with authorization" do
     stub_authorization!
 
-    before do
-      request.env["HTTP_REFERER"] = "http://localhost:3000"
-
-      # ensure no respond_overrides are in effect
-      if Spree::BaseController.spree_responders[:OrdersController].present?
-        Spree::BaseController.spree_responders[:OrdersController].clear
+    let(:order) do
+      create(:completed_order_with_totals) do |o|
+        create(:digital, variant: o.line_items.first.variant)
       end
     end
+    let!(:digital_link) do
+      create(:digital_link, access_counter: 3, line_item: order.line_items.first)
+    end
 
-    let(:order) { mock_model(Spree::Order, :complete? => true, :total => 100, :number => 'R123456789') }
-    before { allow(Spree::Order).to receive_messages :find_by_number! => order }
+    before do
+      request.env["HTTP_REFERER"] = "http://localhost:3000"
+    end
 
     context '#reset_digitals' do
       it 'should reset digitals for an order' do
-        expect(order).to receive(:reset_digital_links!)
-        get :reset_digitals, params: { id: order.number }
+        expect do
+          get :reset_digitals, params: { id: order.number }
+          digital_link.reload
+        end.to change(digital_link, :access_counter).to(0)
+
         expect(response).to redirect_to(spree.admin_order_path(order))
       end
     end

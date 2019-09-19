@@ -1,6 +1,5 @@
 module Spree
   class DigitalsController < Spree::StoreController
-    force_ssl only: :show, if: :ssl_configured?
     rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found
     before_action :authorize_digital_link, only: :show
 
@@ -29,10 +28,6 @@ module Spree
 
       def resource_not_found
         render body: nil, status: 404
-      end
-
-      def ssl_configured?
-        Rails.env.production?
       end
   end
 end

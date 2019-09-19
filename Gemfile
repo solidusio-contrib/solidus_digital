@@ -1,15 +1,18 @@
 source 'https://rubygems.org'
 
-gem 'solidus', '~> 2.0.2'
-gemspec
+branch = ENV.fetch('SOLIDUS_BRANCH', 'master')
+gem 'solidus', github: 'solidusio/solidus', branch: branch
+
+# Needed to help Bundler figure out how to resolve dependencies, otherwise it takes forever to
+# resolve them
+if branch == 'master' || Gem::Version.new(branch[1..-1]) >= Gem::Version.new('2.10.0')
+  gem 'rails', '~> 6.0'
+else
+  gem 'rails', '~> 5.0'
+end
 
 group :test do
-  gem "pry-byebug"
   gem "rails-controller-testing"
-
-  if RUBY_PLATFORM.downcase.include? "darwin"
-    gem 'guard-rspec'
-    gem 'rb-fsevent'
-    gem 'growl'
-  end
 end
+
+gemspec
