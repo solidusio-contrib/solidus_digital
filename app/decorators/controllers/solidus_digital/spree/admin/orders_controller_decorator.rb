@@ -5,7 +5,7 @@ module SolidusDigital
         def reset_digitals
           load_order
           @order.reset_digital_links!
-          flash[:notice] = Spree.t(:downloads_reset, scope: 'digitals')
+          flash[:notice] = I18n.t('spree.digitals.downloads_reset')
           redirect_to spree.admin_order_path(@order)
         end
 

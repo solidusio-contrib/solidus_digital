@@ -6,10 +6,10 @@
         <% if digital_link.ready? %>
           <% format = File.extname(digital_link.attachment.path).downcase %>
           <li>
-            <%= link_to Spree.t(:digital_download, scope: 'digitals', filename: raw(digital_link.attachment_file_name)), digital_url(secret: digital_link.secret), class: "#{format}" %>
+            <%= link_to I18n.t('spree.digitals.digital_download', filename: raw(digital_link.attachment_file_name)), digital_url(secret: digital_link.secret), class: "#{format}" %>
           </li>
         <% else %>
-          <%= Spree.t(:file_is_not_ready, scope: 'digitals') %>
+          <%= I18n.t('spree.digitals.file_is_not_ready') %>
         <% end %>
       <% end %>
     </ul>

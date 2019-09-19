@@ -1,5 +1,5 @@
 <!-- insert_bottom "[data-hook='admin_product_tabs'], #admin_product_tabs[data-hook]" -->
 
 <li<%= ' class=\"active\"' if current == 'Digital Versions' %>>
-  <%= link_to_with_icon 'cloud', Spree.t(:digital_versions, scope: 'digitals'), admin_product_digitals_path(@product) %>
+  <%= link_to_with_icon 'cloud', I18n.t('spree.digitals.digital_versions'), admin_product_digitals_path(@product) %>
 </li>

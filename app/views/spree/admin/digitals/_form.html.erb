@@ -2,12 +2,12 @@
   <%= form_for(:digital, :url => admin_product_digitals_path(@product), :method => :create, :multipart => true ) do |f| %>
     <fieldset>
       <legend><%= Spree::Variant.model_name.human %> "<%= variant.is_master ? "Master" : variant.options_text %>"</legend>
-      <strong><%= Spree.t(:files, scope: 'digitals') %>:</strong>
+      <strong><%= I18n.t('spree.digitals.files') %>:</strong>
       <% if variant.digital? %>
         <table class="table">
           <thead>
             <tr>
-              <th><%= Spree.t(:file_name, scope: "solidus_digital") %></th>
+              <th><%= I18n.t('spree.solidus_digital.file_name') %></th>
               <th class="actions"></th>
             </tr>
           </thead>
@@ -16,18 +16,18 @@
             <tr>
               <td><%= render digital %></td>
               <td class="actions text-right">
-                <%= link_to_with_icon 'delete', Spree.t(:delete_file, scope: 'digitals'), admin_product_digital_url(@product, digital), data: {confirm: Spree.t(:delete_file_confirmation, scope: 'digitals', filename: digital.attachment_file_name)}, method: :delete, class: 'btn btn-danger btn-sm delete-resource' %>
+                <%= link_to_with_icon 'delete', I18n.t('spree.digitals.delete_file'), admin_product_digital_url(@product, digital), data: {confirm: I18n.t('spree.digitals.delete_file_confirmation', filename: digital.attachment_file_name)}, method: :delete, class: 'btn btn-danger btn-sm delete-resource' %>
               </td>
             </tr>
           <% end %>
           </tbody>
         </table>
       <% else %>
-        <%= Spree.t(:none) %>
+        <%= I18n.t('spree.none') %>
       <% end %>
       <p class="form-buttons">
         <%= f.field_container :file do %>
-          <%= f.label :file, Spree.t(:new_file, scope: 'digitals') %> <span class="required">*</span><br/>
+          <%= f.label :file, I18n.t('spree.digitals.new_file') %> <span class="required">*</span><br/>
           <%= f.file_field :attachment %>
           <%= f.label :drm %>
           <%= f.check_box :drm %>
@@ -35,7 +35,7 @@
 
         <%= hidden_field_tag 'digital[variant_id]', variant.id %>
         <br>
-        <%= button Spree.t(:upload, scope: "solidus_digital"), 'add', 'submit', { :class => "btn-success" } %>
+        <%= button I18n.t('spree.solidus_digital.upload'), 'add', 'submit', { :class => "btn-success" } %>
       </p>
     </fieldset>
   <% end %>

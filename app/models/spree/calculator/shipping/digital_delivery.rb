@@ -8,7 +8,7 @@ module Spree
       preference :currency, :string, default: ->{ Spree::Config[:currency] }
 
       def self.description
-        Spree.t(:digital_delivery, scope: 'digital')
+        I18n.t('spree.digitals.digital_delivery')
       end
 
       def compute_package(package=nil)
