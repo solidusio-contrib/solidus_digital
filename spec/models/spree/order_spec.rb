@@ -154,7 +154,13 @@ RSpec.describe Spree::Order do
   end
 
   context '#generate_digital_links' do
-    let(:order) { OrderWalkthrough.up_to(:payment) }
+    let(:order) do
+      if defined?(Spree::TestingSupport::OrderWalkthrough)
+        Spree::TestingSupport::OrderWalkthrough
+      else
+        OrderWalkthrough
+      end.up_to(:payment)
+    end
     let!(:line_item) { create(:line_item, order: order, variant: digital_variant) }
     let!(:digital_variant) { create(:variant, digitals: [create(:digital)]) }
     let(:links) { order.digital_links }
