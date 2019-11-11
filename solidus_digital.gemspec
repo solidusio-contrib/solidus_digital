@@ -1,5 +1,6 @@
-# encoding: utf-8
-lib = File.expand_path('../lib/', __FILE__)
+# frozen_string_literal: true
+
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift lib unless $LOAD_PATH.include?(lib)
 
 require 'solidus_digital/version'
@@ -24,9 +25,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'solidus_core', solidus_version
   s.add_dependency 'solidus_frontend', solidus_version
 
-  s.add_development_dependency 'shoulda-matchers'
   s.add_development_dependency 'coffee-script'
   s.add_development_dependency 'rspec-activemodel-mocks'
   s.add_development_dependency 'sass-rails'
+  s.add_development_dependency 'shoulda-matchers'
   s.add_development_dependency 'solidus_extension_dev_tools'
 end

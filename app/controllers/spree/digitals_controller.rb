@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class DigitalsController < Spree::StoreController
     rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found
@@ -12,22 +14,24 @@ module Spree
     end
 
     private
-      def authorize_digital_link
-        # don't authorize the link unless the file exists
-        raise ActiveRecord::RecordNotFound unless attachment.present?
-        render :unauthorized unless digital_link.file_exists? && digital_link.authorize!
-      end
 
-      def digital_link
-        @link ||= DigitalLink.find_by!(secret: params[:secret])
-      end
+    def authorize_digital_link
+      # don't authorize the link unless the file exists
+      raise ActiveRecord::RecordNotFound if attachment.blank?
 
-      def attachment
-        @attachment ||= digital_link.attachment
-      end
+      render :unauthorized unless digital_link.file_exists? && digital_link.authorize!
+    end
 
-      def resource_not_found
-        render body: nil, status: 404
-      end
+    def digital_link
+      @link ||= DigitalLink.find_by!(secret: params[:secret])
+    end
+
+    def attachment
+      @attachment ||= digital_link.attachment
+    end
+
+    def resource_not_found
+      render body: nil, status: :not_found
+    end
   end
 end

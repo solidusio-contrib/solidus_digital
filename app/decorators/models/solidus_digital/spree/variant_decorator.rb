@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module SolidusDigital
   module Spree
     module VariantDecorator
       def self.prepended(base)
         base.class_eval do
           has_many :digitals
-          after_save :destroy_digital, :if => :deleted?
+          after_save :destroy_digital, if: :deleted?
         end
       end
 

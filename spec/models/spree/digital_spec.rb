@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe Spree::Digital do
@@ -5,10 +7,10 @@ RSpec.describe Spree::Digital do
     it { is_expected.to belong_to(:variant) }
   end
 
-  context "#destroy" do
-    it "should destroy associated digital_links" do
+  describe "#destroy" do
+    it "destroys associated digital_links" do
       digital = create(:digital)
-      3.times { digital.digital_links.create!({ :line_item => create(:line_item) }) }
+      3.times { digital.digital_links.create!(line_item: create(:line_item)) }
       expect(Spree::DigitalLink.count).to eq(3)
       expect {
         digital.destroy

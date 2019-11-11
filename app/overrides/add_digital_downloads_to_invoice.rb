@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Deface::Override.new(
   virtual_path: "spree/shared/_order_details",
   name: "add_digital_downloads_to_invoice",

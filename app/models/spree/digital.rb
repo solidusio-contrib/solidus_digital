@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module Spree
-  class Digital < ActiveRecord::Base
+  class Digital < ApplicationRecord
     belongs_to :variant
     has_many :digital_links, dependent: :destroy
     has_many :drm_records, dependent: :destroy

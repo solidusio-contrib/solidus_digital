@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe Spree::DigitalsController, type: :controller do
-
-  context '#show' do
+  describe '#show' do
     let(:digital) { create(:digital) }
     let(:digital_link) { create(:digital_link, digital: digital) }
 
@@ -28,11 +29,11 @@ RSpec.describe Spree::DigitalsController, type: :controller do
       it 'returns a 200 and calls send_file that is a file' do
         expect(controller)
           .to receive(:send_file)
-          .with(
-            digital.attachment.path,
-            filename: digital.attachment.original_filename,
-            type: digital.attachment.content_type
-          ){ controller.render body: nil, content_type: digital.attachment.content_type }
+            .with(
+              digital.attachment.path,
+              filename: digital.attachment.original_filename,
+              type: digital.attachment.content_type
+            ){ controller.render body: nil, content_type: digital.attachment.content_type }
 
         get :show, params: { secret: digital_link.secret }
         expect(response.status).to eq(200)
