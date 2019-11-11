@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SolidusDigital
   module Spree
     module OrderDecorator
@@ -7,11 +9,11 @@ module SolidusDigital
 
       # all products are digital
       def digital?
-        line_items.all? { |item| item.digital? }
+        line_items.all?(&:digital?)
       end
 
       def some_digital?
-        line_items.any? { |item| item.digital? }
+        line_items.any?(&:digital?)
       end
 
       def digital_line_items
@@ -23,9 +25,7 @@ module SolidusDigital
       end
 
       def reset_digital_links!
-        digital_links.each do |digital_link|
-          digital_link.reset!
-        end
+        digital_links.each(&:reset!)
       end
 
       private

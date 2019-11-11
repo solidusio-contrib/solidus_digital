@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe Spree::Admin::DigitalsController do
@@ -5,7 +7,7 @@ RSpec.describe Spree::Admin::DigitalsController do
 
   let!(:product) { create(:product) }
 
-  context '#index' do
+  describe '#index' do
     render_views
 
     context "with variants" do
@@ -33,7 +35,6 @@ RSpec.describe Spree::Admin::DigitalsController do
     end
 
     context "without non-master variants" do
-
       it "displays an empty page when the master variant is not digital" do
         get :index, params: { product_id: product.slug }
         expect(response.code).to eq("200")
@@ -42,7 +43,7 @@ RSpec.describe Spree::Admin::DigitalsController do
       end
 
       it "displays the variant details when the master is digital" do
-        @digital = create :digital, :variant => product.master
+        @digital = create :digital, variant: product.master
         get :index, params: { product_id: product.slug }
 
         expect(response.code).to eq("200")
@@ -51,15 +52,15 @@ RSpec.describe Spree::Admin::DigitalsController do
     end
   end
 
-  context '#create' do
+  describe '#create' do
     context 'for a product that exists' do
       let!(:variant) { create(:variant, product: product) }
 
       it 'creates a digital associated with the variant and product' do
         expect {
           post :create, params: { product_id: product.slug,
-                              digital: { variant_id: variant.id,
-                                         attachment: upload_image('thinking-cat.jpg') } }
+                                  digital: { variant_id: variant.id,
+                                             attachment: upload_image('thinking-cat.jpg') } }
           expect(response).to redirect_to(spree.admin_product_digitals_path(product))
         }.to change(Spree::Digital, :count).by(1)
       end
@@ -76,7 +77,7 @@ RSpec.describe Spree::Admin::DigitalsController do
     end
   end
 
-  context '#destroy' do
+  describe '#destroy' do
     let(:digital) { create(:digital) }
     let!(:variant) { create(:variant, product: product, digitals: [digital]) }
 

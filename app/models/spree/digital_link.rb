@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module Spree
-  class DigitalLink < ActiveRecord::Base
+  class DigitalLink < ApplicationRecord
     belongs_to :digital
     belongs_to :line_item
 
     validates :digital, presence: true
-    validates_length_of :secret, is: 30
+    validates :secret, length: { is: 30 }
     before_validation :set_defaults, on: :create
 
     delegate :attachment_file_name, :cloud?, to: :digital
@@ -15,7 +17,7 @@ module Spree
     end
 
     def expired?
-      self.created_at <= Spree::DigitalConfiguration[:authorized_days].day.ago
+      created_at <= Spree::DigitalConfiguration[:authorized_days].day.ago
     end
 
     def ready?
@@ -29,7 +31,7 @@ module Spree
     def access_limit_exceeded?
       return false if Spree::DigitalConfiguration[:authorized_clicks].nil?
 
-      self.access_counter >= Spree::DigitalConfiguration[:authorized_clicks]
+      access_counter >= Spree::DigitalConfiguration[:authorized_clicks]
     end
 
     # This method should be called when a download is initiated.
@@ -40,7 +42,7 @@ module Spree
 
     def reset!
       update_column :access_counter, 0
-      update_column :created_at, Time.now
+      update_column :created_at, Time.zone.now
     end
 
     def attachment

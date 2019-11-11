@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module Spree
-  class DrmRecord < ActiveRecord::Base
+  class DrmRecord < ApplicationRecord
     belongs_to :digital
     belongs_to :line_item
 
@@ -14,8 +16,9 @@ module Spree
     end
 
     private
-      def prepare_drm_mark
-        # TODO: implement DRM functionality, set new file for DRM record
-      end
+
+    def prepare_drm_mark
+      # TODO: implement DRM functionality, set new file for DRM record
+    end
   end
 end

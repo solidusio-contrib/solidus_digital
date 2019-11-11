@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   module Stock
     module Splitter
@@ -11,6 +13,7 @@ module Spree
         end
 
         private
+
         def split_by_digital(package)
           digitals = Hash.new { |hash, key| hash[key] = [] }
           package.contents.each do |item|
@@ -21,7 +24,7 @@ module Spree
 
         def hash_to_packages(digitals)
           packages = []
-          digitals.each do |id, contents|
+          digitals.each do |_id, contents|
             packages << build_package(contents)
           end
           packages

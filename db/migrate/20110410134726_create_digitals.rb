@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateDigitals < ActiveRecord::Migration[4.2]
   def self.up
     create_table :digitals do |t|
@@ -9,7 +11,7 @@ class CreateDigitals < ActiveRecord::Migration[4.2]
     end
     add_index :digitals, :variant_id
 
-    create_table :digital_links, :force => true do |t|
+    create_table :digital_links, force: true do |t|
       t.integer :digital_id
       t.integer :line_item_id
       t.string  :secret

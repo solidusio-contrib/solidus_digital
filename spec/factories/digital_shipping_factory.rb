@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   # https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md#modifying-factories
 

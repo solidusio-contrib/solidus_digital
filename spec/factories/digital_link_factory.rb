@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
-  factory :digital_link, :class => Spree::DigitalLink do |f|
+  factory :digital_link, class: Spree::DigitalLink do |f|
     f.digital { |p| p.association(:digital) }
     f.line_item { |p| p.association(:line_item) }
   end

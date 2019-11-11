@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 class SampleDrmMaker
@@ -14,9 +16,10 @@ end
 
 Spree::DrmRecord.class_eval do
   private
-    def prepare_drm_mark
-      SampleDrmMaker.new(self).create!
-    end
+
+  def prepare_drm_mark
+    SampleDrmMaker.new(self).create!
+  end
 end
 
 RSpec.describe Spree::DrmRecord do

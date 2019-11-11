@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe Spree::DigitalLink do
@@ -6,33 +8,33 @@ RSpec.describe Spree::DigitalLink do
     it { is_expected.to belong_to(:line_item) }
   end
 
-  context "#create" do
-    it "should create an appropriately long secret" do
+  describe "#create" do
+    it "creates an appropriately long secret" do
       expect(create(:digital_link, secret: nil).secret.length).to eq(30)
     end
 
-    it "should zero out the access counter on creation" do
+    it "zeroes out the access counter on creation" do
       expect(create(:digital_link, access_counter: nil).access_counter).to eq(0)
     end
   end
 
-  context "#update" do
-    it "should not change the secret when updated" do
+  describe "#update" do
+    it "does not change the secret when updated" do
       digital_link = create(:digital_link)
       secret = digital_link.secret
       digital_link.increment(:access_counter).save
       expect(digital_link.secret).to eq(secret)
     end
 
-    it "should enforce to have an associated digital" do
+    it "enforces to have an associated digital" do
       link = create(:digital_link)
-      expect { link.update!(:digital => nil) }.to raise_error(ActiveRecord::RecordInvalid)
+      expect { link.update!(digital: nil) }.to raise_error(ActiveRecord::RecordInvalid)
     end
 
-    it "should not allow an empty or too short secret" do
+    it "does not allow an empty or too short secret" do
       link = create(:digital_link)
-      expect { link.update!(:secret => nil) }.to raise_error(ActiveRecord::RecordInvalid)
-      expect { link.update!(:secret => 'x' * 25) }.to raise_error(ActiveRecord::RecordInvalid)
+      expect { link.update!(secret: nil) }.to raise_error(ActiveRecord::RecordInvalid)
+      expect { link.update!(secret: 'x' * 25) }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 
@@ -41,17 +43,17 @@ RSpec.describe Spree::DigitalLink do
 
     before { Spree::DigitalConfiguration.reset }
 
-    it "should increment the counter using #authorize!" do
+    it "increments the counter using #authorize!" do
       expect(link.access_counter).to eq(0)
       expect { link.authorize! }.to change(link, :access_counter).by(1)
     end
 
-    it "should be #authorized? when configuration for access_counter set to nil " do
+    it "is #authorized? when configuration for access_counter set to nil" do
       stub_spree_preferences(Spree::DigitalConfiguration, authorized_clicks: nil)
       expect(link.authorizable?).to be true
     end
 
-    it "should not be #authorized? when the access_counter is too high" do
+    it "is not #authorized? when the access_counter is too high" do
       allow(link).to receive_messages(access_counter: Spree::DigitalConfiguration[:authorized_clicks] - 1)
       expect(link.authorizable?).to be true
 
@@ -59,7 +61,7 @@ RSpec.describe Spree::DigitalLink do
       expect(link.authorizable?).to be false
     end
 
-    it "should not be #authorize! when the created_at date is too far in the past" do
+    it "is not #authorize! when the created_at date is too far in the past" do
       expect(link.authorize!).to be true
 
       allow(link).to receive_messages(created_at: (Spree::DigitalConfiguration[:authorized_days] * 24 - 1).hours.ago)
@@ -69,7 +71,7 @@ RSpec.describe Spree::DigitalLink do
       expect(link.authorize!).to be false
     end
 
-    it "should not be #authorized? when both access_counter and created_at are invalid" do
+    it "is not #authorized? when both access_counter and created_at are invalid" do
       expect(link.authorizable?).to be true
       allow(link).to receive_messages(
         access_counter: Spree::DigitalConfiguration[:authorized_clicks],
@@ -79,8 +81,8 @@ RSpec.describe Spree::DigitalLink do
     end
   end
 
-  context '#reset!' do
-    it 'should reset the access counter' do
+  describe '#reset!' do
+    it 'resets the access counter' do
       link = create(:digital_link)
       link.authorize!
       expect(link.access_counter).to eq(1)

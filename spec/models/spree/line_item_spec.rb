@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'spree/testing_support/order_walkthrough'
 
@@ -7,7 +9,7 @@ RSpec.describe Spree::LineItem do
   let!(:digital_variant) { create(:variant, digitals: [digital]) }
   let!(:master_digital_variant) { create(:on_demand_master_variant, digitals: [create(:digital)]) }
 
-  context "#digital?" do
+  describe "#digital?" do
     it "reports as digital if either the master variant or selected variant has digitals" do
       expect(build(:variant)).not_to be_digital
       expect(build(:on_demand_master_variant)).not_to be_digital
@@ -17,7 +19,7 @@ RSpec.describe Spree::LineItem do
     end
   end
 
-  context "#create_digital_links" do
+  describe "#create_digital_links" do
     let(:line_item) { create(:line_item, order: order, variant: digital_variant) }
 
     context "digital has drm restrictions" do
@@ -32,10 +34,12 @@ RSpec.describe Spree::LineItem do
 
     context "digital links" do
       let(:digital) { create(:digital) }
+
       before do
         line_item.quantity = 8
         line_item.save
       end
+
       after { stub_spree_preferences(Spree::DigitalConfiguration, digital_links_count: "quantity") }
 
       context "when :digital_links_count settings set to 'quantity' (default)" do
@@ -68,7 +72,7 @@ RSpec.describe Spree::LineItem do
     end
   end
 
-  context "#destroy" do
+  describe "#destroy" do
     it "destroys associated links when destroyed" do
       line_item = create(:line_item, order: order, variant: digital_variant)
       line_item.create_digital_links

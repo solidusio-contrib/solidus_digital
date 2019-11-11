@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class SpreeDigitalConfiguration < Preferences::Configuration
     # number of times a customer can download a digital file

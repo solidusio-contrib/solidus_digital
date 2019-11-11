@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateDrmRecords < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_drm_records do |t|

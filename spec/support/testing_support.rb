@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SolidusDigital
   module TestingSupport
     module Helpers

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # https://github.com/spree/spree/issues/1439
 require_dependency 'spree/shipping_calculator'
 
@@ -11,8 +13,8 @@ module Spree
         I18n.t('spree.digitals.digital_delivery')
       end
 
-      def compute_package(package=nil)
-        self.preferred_amount
+      def compute_package(_package = nil)
+        preferred_amount
       end
 
       def available?(package)

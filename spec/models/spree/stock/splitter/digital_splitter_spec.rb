@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 module Spree
   module Stock
     module Splitter
       RSpec.describe DigitalSplitter do
-        subject { DigitalSplitter.new(stock_location) }
+        subject { described_class.new(stock_location) }
 
         let(:item1) { create(:inventory_unit, variant: create(:digital).variant) }
         let(:item2) { create(:inventory_unit, variant: create(:variant)) }

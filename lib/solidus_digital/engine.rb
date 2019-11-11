@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module SolidusDigital
   class Engine < Rails::Engine
     engine_name 'solidus_digital'
 
     config.autoload_paths += %W(#{config.root}/lib)
 
-    initializer "spree.solidus_digital.preferences", before: "spree.environment" do |app|
+    initializer "spree.solidus_digital.preferences", before: "spree.environment" do |_app|
       Spree::DigitalConfiguration = Spree::SpreeDigitalConfiguration.new
     end
 
