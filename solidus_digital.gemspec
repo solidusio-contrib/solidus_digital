@@ -19,11 +19,11 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
   s.required_ruby_version = '>= 2.1.0'
 
-  s.add_dependency 'solidus_backend'
-  s.add_dependency 'solidus_core'
-  s.add_dependency 'solidus_frontend'
+  solidus_version = ['>= 2.0', '< 3']
+  s.add_dependency 'solidus_backend', solidus_version
+  s.add_dependency 'solidus_core', solidus_version
+  s.add_dependency 'solidus_frontend', solidus_version
 
-  # test suite
   s.add_development_dependency 'shoulda-matchers'
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'coffee-script'
