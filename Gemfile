@@ -11,6 +11,16 @@ else
   gem 'rails', '~> 5.0'
 end
 
+case ENV['DB']
+when 'mysql'
+  gem 'mysql2'
+when 'postgres'
+  gem 'gp'
+else
+  gem 'sqlite3'
+end
+
 gem 'rails-controller-testing'
+gem 'solidus_extension_dev_tools', github: 'solidusio-contrib/solidus_extension_dev_tools'
 
 gemspec
