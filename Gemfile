@@ -16,7 +16,7 @@ end
 case ENV['DB']
 when 'mysql'
   gem 'mysql2'
-when 'postgres'
+when 'postgresql'
   gem 'gp'
 else
   gem 'sqlite3'
