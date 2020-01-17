@@ -1,33 +1,38 @@
 # frozen_string_literal: true
 
-lib = File.expand_path('lib', __dir__)
-$LOAD_PATH.unshift lib unless $LOAD_PATH.include?(lib)
-
+$:.push File.expand_path('lib', __dir__)
 require 'solidus_digital/version'
 
 Gem::Specification.new do |s|
-  s.platform     = Gem::Platform::RUBY
-  s.name         = 'solidus_digital'
-  s.version      = SolidusDigital.version
-  s.summary      = ''
-  s.description  = 'Digital download functionality for Solidus'
-  s.authors      = ['funkensturm', 'Michael Bianco']
-  s.email        = ['info@cliffsidedev.com']
-  s.homepage     = 'http://www.funkensturm.com'
-  s.files        = `git ls-files`.split("\n")
-  s.test_files   = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.require_path = 'lib'
-  s.requirements << 'none'
-  s.required_ruby_version = '>= 2.1.0'
+  s.name = 'solidus_digital'
+  s.version = SolidusDigital::VERSION
+  s.summary = 'Digital download functionality for Solidus'
+  s.description = s.summary
+  s.license = 'BSD-3-Clause'
 
-  solidus_version = ['>= 2.0', '< 3']
-  s.add_dependency 'solidus_backend', solidus_version
-  s.add_dependency 'solidus_core', solidus_version
-  s.add_dependency 'solidus_frontend', solidus_version
+  s.author = ['funkensturm', 'Michael Bianco']
+  s.email = 'info@cliffsidedev.com'
+  s.homepage = 'https://github.com/solidusio-contrib/solidus_digital'
 
-  s.add_development_dependency 'coffee-script'
+  if s.respond_to?(:metadata)
+    s.metadata["homepage_uri"] = s.homepage if s.homepage
+    s.metadata["source_code_uri"] = s.homepage if s.homepage
+  end
+
+  s.required_ruby_version = '~> 2.4'
+
+  s.files = Dir.chdir(File.expand_path(__dir__)) do
+    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  end
+  s.test_files = Dir['spec/**/*']
+  s.bindir = "exe"
+  s.executables = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  s.require_paths = ["lib"]
+
+  s.add_dependency 'solidus', ['>= 2.0.0', '< 3']
+  s.add_dependency 'solidus_support', '~> 0.4.0'
+
   s.add_development_dependency 'rspec-activemodel-mocks'
-  s.add_development_dependency 'sass-rails'
   s.add_development_dependency 'shoulda-matchers'
-  s.add_development_dependency 'solidus_extension_dev_tools'
+  s.add_development_dependency 'solidus_dev_support'
 end
