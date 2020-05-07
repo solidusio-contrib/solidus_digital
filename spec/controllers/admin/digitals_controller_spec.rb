@@ -38,8 +38,8 @@ RSpec.describe Spree::Admin::DigitalsController do
       it "displays an empty page when the master variant is not digital" do
         get :index, params: { product_id: product.slug }
         expect(response.code).to eq("200")
-        expect(response.body).to include("This product has no variants")
-        expect(response.body).not_to include('A digital version of this product currently exists')
+        expect(response.body).to include("<span>This product has no variants.</span>")
+        expect(response.body).not_to include('<span>A digital version of this product currently exists:</span>')
       end
 
       it "displays the variant details when the master is digital" do
@@ -47,7 +47,7 @@ RSpec.describe Spree::Admin::DigitalsController do
         get :index, params: { product_id: product.slug }
 
         expect(response.code).to eq("200")
-        expect(response.body).to include('A digital version of this product currently exists')
+        expect(response.body).to include('<span>A digital version of this product currently exists:</span>')
       end
     end
   end

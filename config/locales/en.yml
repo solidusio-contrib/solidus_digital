@@ -28,3 +28,5 @@ en:
         unauthorized: Unauthorized
       upload: Upload
       file_name: File name
+      product_no_variants: This product has no variants.
+      product_with_variants: "A digital version of this product currently exists:"
