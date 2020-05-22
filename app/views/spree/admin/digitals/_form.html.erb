@@ -4,38 +4,44 @@
       <legend><%= Spree::Variant.model_name.human %> "<%= variant.is_master ? "Master" : variant.options_text %>"</legend>
       <strong><%= I18n.t('spree.digitals.files') %>:</strong>
       <% if variant.digital? %>
-        <table class="table">
-          <thead>
-            <tr>
-              <th><%= I18n.t('spree.digitals.file_name') %></th>
-              <th class="actions"></th>
-            </tr>
-          </thead>
-          <tbody>
-          <% variant.digitals.each do |digital| %>
-            <tr>
-              <td><%= render digital %></td>
-              <td class="actions text-right">
-                <%= link_to_with_icon 'delete', I18n.t('spree.digitals.delete_file'), admin_product_digital_url(@product, digital), data: {confirm: I18n.t('spree.digitals.delete_file_confirmation', filename: digital.attachment_file_name)}, method: :delete, class: 'btn btn-danger btn-sm delete-resource' %>
-              </td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
+        <% if can?(:display, Spree::Digital) %>
+          <table class="table">
+            <thead>
+              <tr>
+                <th><%= I18n.t('spree.digitals.file_name') %></th>
+                <th class="actions"></th>
+              </tr>
+            </thead>
+            <tbody>
+            <% variant.digitals.each do |digital| %>
+              <tr>
+                <td><%= render digital %></td>
+                <td class="actions text-right">
+                  <% if can?(:destroy, Spree::Digital) %>
+                    <%= link_to_with_icon 'delete', I18n.t('spree.digitals.delete_file'), admin_product_digital_url(@product, digital), data: {confirm: I18n.t('spree.digitals.delete_file_confirmation', filename: digital.attachment_file_name)}, method: :delete, class: 'btn btn-danger btn-sm delete-resource' %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        <% end %>
       <% else %>
         <%= I18n.t('spree.none') %>
       <% end %>
       <p class="form-buttons">
-        <%= f.field_container :file do %>
-          <%= f.label :file, I18n.t('spree.digitals.new_file') %> <span class="required">*</span><br/>
-          <%= f.file_field :attachment %>
-          <%= f.label :drm %>
-          <%= f.check_box :drm %>
-        <% end %>
+        <% if can?(:create, Spree::Digital) %>
+          <%= f.field_container :file do %>
+            <%= f.label :file, I18n.t('spree.digitals.new_file') %> <span class="required">*</span><br/>
+            <%= f.file_field :attachment %>
+            <%= f.label :drm %>
+            <%= f.check_box :drm %>
+          <% end %>
 
-        <%= hidden_field_tag 'digital[variant_id]', variant.id %>
-        <br>
-        <%= button_tag I18n.t('spree.digitals.upload'), :class => "btn-success" %>
+          <%= hidden_field_tag 'digital[variant_id]', variant.id %>
+          <br>
+          <%= button_tag I18n.t('spree.digitals.upload'), :class => "btn-success" %>
+        <% end %>
       </p>
     </fieldset>
   <% end %>

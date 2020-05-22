@@ -6,10 +6,12 @@
     <%= render 'form', :variant => variant %>
   <% end %>
 <% else %>
- <span><%= t('spree.digitals.product_no_variants') %></span>
- <% if @product.master.digital? %>
-    <span><%= t('spree.digitals.product_with_variants') %></span>
-    <%= render @product.master.digitals %>
+  <span><%= t('spree.digitals.product_no_variants') %></span>
+  <% if @product.master.digital? %>
+    <% if can?(:display, Spree::Digital) %>
+      <span><%= t('spree.digitals.product_with_variants') %></span>
+      <%= render @product.master.digitals %>
+    <% end %>
   <% end %>
   <%= render 'form', :variant => @product.master %>
 <% end %>
