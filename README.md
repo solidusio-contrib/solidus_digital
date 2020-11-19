@@ -201,8 +201,8 @@ rake rspec
 
 ### Contributors
 
-See https://github.com/halo/solidus_digital/graphs/contributors
+See https://github.com/solidusio-contrib/solidus_digital/graphs/contributors
 
 ### License
 
-MIT © 2011-2015 halo, see [LICENSE](http://github.com/halo/solidus_digital/blob/master/LICENSE.md)
+MIT © 2011-2015 halo, see [LICENSE](https://github.com/solidusio-contrib/solidus_digital/blob/master/LICENSE.md)
