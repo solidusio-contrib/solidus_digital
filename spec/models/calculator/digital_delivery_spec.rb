@@ -24,40 +24,25 @@ RSpec.describe Spree::Calculator::Shipping::DigitalDelivery do
   end
 
   describe '#available?' do
+    let(:digital_variant) { build(:variant, digitals: [build(:digital)]) }
+    let(:regular_variant) { build(:variant) }
+
     let(:digital_order) {
-      order = create(:order)
-      variants = 3.times.map { create(:variant, digitals: [FactoryBot.create(:digital)]) }
-      package = Spree::Stock::Package.new(create(:stock_location), [])
-      variants.each { |v|
-        order.contents.add(v, 1)
-        order.create_proposed_shipments
-        package.add(order.inventory_units.where(variant_id: v.id).first)
-      }
+      package = Spree::Stock::Package.new(build(:stock_location), [])
+      package.add(build(:inventory_unit, variant: digital_variant))
       package
     }
 
     let(:mixed_order) {
-      order = create(:order)
-      variants = 2.times.map { create(:variant, digitals: [FactoryBot.create(:digital)]) }
-      variants << create(:variant)
-      package = Spree::Stock::Package.new(create(:stock_location), [])
-      variants.each { |v|
-        order.contents.add(v, 1)
-        order.create_proposed_shipments
-        package.add(order.inventory_units.where(variant_id: v.id).first)
-      }
+      package = Spree::Stock::Package.new(build(:stock_location), [])
+      package.add(build(:inventory_unit, variant: digital_variant))
+      package.add(build(:inventory_unit, variant: regular_variant))
       package
     }
 
     let(:non_digital_order) {
-      order = create(:order)
-      variants = 3.times.map { create(:variant) }
-      package = Spree::Stock::Package.new(create(:stock_location), [])
-      variants.each { |v|
-        order.contents.add(v, 1)
-        order.create_proposed_shipments
-        package.add(order.inventory_units.where(variant_id: v.id).first)
-      }
+      package = Spree::Stock::Package.new(build(:stock_location), [])
+      package.add(build(:inventory_unit, variant: regular_variant))
       package
     }
 

@@ -156,41 +156,32 @@ RSpec.describe Spree::Order do
   end
 
   describe '#generate_digital_links' do
-    let(:order) do
-      if defined?(Spree::TestingSupport::OrderWalkthrough)
-        Spree::TestingSupport::OrderWalkthrough
-      else
-        OrderWalkthrough
-      end.up_to(:payment)
-    end
-    let!(:line_item) { create(:line_item, order: order, variant: digital_variant) }
-    let!(:digital_variant) { create(:variant, digitals: [create(:digital)]) }
-    let(:links) { order.digital_links }
+    let(:digital_variant) { create(:variant, digitals: [create(:digital)]) }
+
+    subject(:links) { order.digital_links }
 
     context "when order in complete state" do
-      it "creates one link for a single digital Variant" do
+      let(:order) {
+        create(
+          :order_ready_to_complete,
+          line_items_attributes: [{ variant: digital_variant, quantity: 8 }]
+        )
+      }
+
+      it "creates a link for each quantity of a digital Variant" do
         order.complete!
-
-        expect(links.to_a.size).to eq(1)
-        expect(links.first.line_item).to eq(line_item)
-      end
-
-      context "when line_items has quantity more than 1 " do
-        before do
-          line_item.quantity = 8
-          line_item.save
-        end
-
-        it "creates a link for each quantity of a digital Variant, even when quantity changes later" do
-          order.complete!
-
-          expect(links.to_a.size).to eq(8)
-          links.each { |link| expect(link.line_item).to eq(line_item) }
-        end
+        expect(links.count).to eq(8)
       end
     end
 
     context "when order is in other state" do
+      let(:order) {
+        create(
+          :order_with_line_items,
+          line_items_attributes: [{ variant: digital_variant, quantity: 8 }]
+        )
+      }
+
       it "doesn't create a link for digital Variant" do
         expect(links.count).to eq(0)
       end
