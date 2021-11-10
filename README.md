@@ -48,7 +48,7 @@ Current version of `solidus_digital` is not compatable with `solidus` version 2.
 Add this line to the `Gemfile` in your Spree project:
 
 ```ruby
-gem 'solidus_digital', github: 'denkungsart/solidus_digital'
+gem 'solidus_digital', github: 'solidusio-contrib/solidus_digital'
 ```
 
 The following terminal commands will copy the migration files to the corresponding directory in your Rails application and apply the migrations to your database.
