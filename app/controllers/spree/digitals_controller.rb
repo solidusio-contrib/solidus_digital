@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Spree
-  class DigitalsController < Spree::StoreController
+  class DigitalsController < Spree::BaseController
     rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found
     before_action :authorize_digital_link, only: :show
 
