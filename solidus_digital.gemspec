@@ -1,38 +1,37 @@
 # frozen_string_literal: true
 
-$:.push File.expand_path('lib', __dir__)
-require 'solidus_digital/version'
+require_relative 'lib/solidus_digital/version'
 
-Gem::Specification.new do |s|
-  s.name = 'solidus_digital'
-  s.version = SolidusDigital::VERSION
-  s.summary = 'Digital download functionality for Solidus'
-  s.description = s.summary
-  s.license = 'BSD-3-Clause'
+Gem::Specification.new do |spec|
+  spec.name = 'solidus_digital'
+  spec.version = SolidusDigital::VERSION
+  spec.summary = 'Digital download functionality for Solidus'
+  spec.description = spec.summary
+  spec.license = 'BSD-3-Clause'
 
-  s.author = ['funkensturm', 'Michael Bianco']
-  s.email = 'info@cliffsidedev.com'
-  s.homepage = 'https://github.com/solidusio-contrib/solidus_digital'
+  spec.author = ['funkensturm', 'Michael Bianco']
+  spec.email = 'info@cliffsidedev.com'
+  spec.homepage = 'https://github.com/solidusio-contrib/solidus_digital'
 
-  if s.respond_to?(:metadata)
-    s.metadata["homepage_uri"] = s.homepage if s.homepage
-    s.metadata["source_code_uri"] = s.homepage if s.homepage
+  if spec.respond_to?(:metadata)
+    spec.metadata["homepage_uri"] = spec.homepage if spec.homepage
+    spec.metadata["source_code_uri"] = spec.homepage if spec.homepage
   end
 
-  s.required_ruby_version = ['>= 2.4', '< 4.0']
+  spec.required_ruby_version = ['>= 2.4', '< 4.0']
 
-  s.files = Dir.chdir(File.expand_path(__dir__)) do
+  spec.files = Dir.chdir(File.expand_path(__dir__)) do
     `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   end
-  s.test_files = Dir['spec/**/*']
-  s.bindir = "exe"
-  s.executables = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  s.require_paths = ["lib"]
+  spec.test_files = Dir['spec/**/*']
+  spec.bindir = "exe"
+  spec.executables = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.require_paths = ["lib"]
 
-  s.add_dependency 'solidus', ['>= 2.0.0', '< 4.0']
-  s.add_dependency 'solidus_support', '~> 0.5'
+  spec.add_dependency 'solidus', ['>= 2.0.0']
+  spec.add_dependency 'solidus_support', '~> 0.5'
 
-  s.add_development_dependency 'rspec-activemodel-mocks'
-  s.add_development_dependency 'shoulda-matchers'
-  s.add_development_dependency 'solidus_dev_support'
+  spec.add_development_dependency 'rspec-activemodel-mocks'
+  spec.add_development_dependency 'shoulda-matchers'
+  spec.add_development_dependency 'solidus_dev_support'
 end
