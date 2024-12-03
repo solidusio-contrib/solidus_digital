@@ -11,6 +11,10 @@ module SolidusDigital
 
     engine_name 'solidus_digital'
 
+    initializer "solidus_digital.zeitwerk_ignore_deface_overrides", before: :eager_load! do |app|
+      app.autoloaders.main.ignore(root.join('app/overrides'))
+    end
+
     initializer "spree.register.digital_shipping" do |app|
       Rails.application.config.after_initialize do
         ::Spree::DigitalConfiguration = ::Spree::SpreeDigitalConfiguration.new
