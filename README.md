@@ -97,7 +97,9 @@ end
 
 Example:
 ```ruby
-Spree::DigitalConfiguration[:authorized_clicks] = nil # infinite access for user
+Rails.application.config.after_initialize do
+  Spree::DigitalConfiguration[:authorized_clicks] = nil # infinite access for user
+end
 ```
 
 ### DRM
