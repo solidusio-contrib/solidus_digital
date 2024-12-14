@@ -188,10 +188,6 @@ References:
 
 ### Development
 
-#### Table Diagram
-
-<img src="https://camo.githubusercontent.com/5fc9017154dc2ea3463e59cb76f7860597f2d3ff/68747470733a2f2f63646e2e7261776769742e636f6d2f68616c6f2f73707265655f6469676974616c2f6d61737465722f646f632f7461626c65732e706e67">
-
 #### Testing
 
 ```shell
@@ -205,4 +201,4 @@ See https://github.com/solidusio-contrib/solidus_digital/graphs/contributors
 
 ### License
 
-MIT © 2011-2015 halo, see [LICENSE](https://github.com/solidusio-contrib/solidus_digital/blob/master/LICENSE.md)
+MIT © 2011-2024 halo and reposititory contributors, [LICENSE](https://github.com/solidusio-contrib/solidus_digital/blob/master/LICENSE.md)
