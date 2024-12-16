@@ -24,7 +24,7 @@ module Spree
 
         def hash_to_packages(digitals)
           packages = []
-          digitals.each do |_id, contents|
+          digitals.each_value do |contents|
             packages << build_package(contents)
           end
           packages
