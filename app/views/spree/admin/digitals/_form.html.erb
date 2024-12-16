@@ -18,7 +18,7 @@
                 <td><%= render digital %></td>
                 <td class="actions text-right">
                   <% if can?(:destroy, Spree::Digital) %>
-                    <%= link_to_with_icon 'delete', I18n.t('spree.digitals.delete_file'), admin_product_digital_url(@product, digital), data: {confirm: I18n.t('spree.digitals.delete_file_confirmation', filename: digital.attachment_file_name)}, method: :delete, class: 'btn btn-danger btn-sm delete-resource' %>
+                    <%= link_to_delete nil, url: admin_product_digital_url(@product, digital), no_text: true, confirm: I18n.t('spree.digitals.delete_file_confirmation', filename: digital.attachment_file_name) %>
                   <% end %>
                 </td>
               </tr>
